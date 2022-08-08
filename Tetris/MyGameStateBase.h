@@ -21,6 +21,9 @@ class TETRIS_API AMyGameStateBase : public AGameStateBase
 	auto Tick(float DeltaTime) -> void override;
 public:
 	auto createBlock()-> AActor *;
+	auto left() -> void;
+	auto right() -> void;
+	auto rotate() -> void;
 private:
 	std::unique_ptr<Shape> currentShape;
 	std::unique_ptr<MyField> field;
@@ -28,4 +31,6 @@ private:
 	int x = 3;
 	float nextMove = 0;
 	auto newShape() -> void;
+	auto putShapeOnTheFloor() -> void;
+	auto isCollide() const -> bool;
 };

@@ -13,6 +13,8 @@ public:
 	~Shape();
 	auto moveTo(int x, int y) -> void;
 	auto hasBlock(int x, int y) const -> bool;
+	auto rotL() -> void;
+	auto rotR() -> void;
 
 private:
 	std::array<std::array<class AActor*, 4>, 4> blocks;

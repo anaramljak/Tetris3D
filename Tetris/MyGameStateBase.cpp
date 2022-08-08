@@ -29,9 +29,23 @@ auto AMyGameStateBase::Tick(float DeltaTime) -> void
 	if (GetWorld()->GetTimeSeconds() > nextMove)
 	{
 		++y;
+		if (isCollide())
+		{
+			--y;
+			putShapeOnTheFloor();
+		}
 		currentShape->moveTo(x, y);
-		nextMove = GetWorld()->GetTimeSeconds() + 1;
+		nextMove = GetWorld()->GetTimeSeconds() + 0.5;
 	}
+}
+
+auto AMyGameStateBase::isCollide() const -> bool
+{
+	for (int xx = 0; xx < 4; ++xx)
+		for (int yy = 0; yy < 4; ++yy)
+			if (currentShape->hasBlock(xx, yy) && field->hasBlock(xx + x, yy + y))
+				return true;
+	return false;
 }
 
 auto AMyGameStateBase::createBlock() -> AActor *
@@ -46,4 +60,41 @@ auto AMyGameStateBase::EndPlay(const EEndPlayReason::Type EndPlayReason) -> void
 {
 	field = nullptr;
 	currentShape = nullptr;
+}
+
+auto AMyGameStateBase::putShapeOnTheFloor() -> void
+{
+	for (int xx = 0; xx < 4; ++xx)
+		for (int yy = 0; yy < 4; ++yy)
+		{
+			if (currentShape->hasBlock(xx, yy))
+				field->addBlock(xx + x, yy + y);
+		}
+	newShape();
+}
+
+auto AMyGameStateBase::left() -> void
+{
+	--x;
+	if (isCollide())
+		++x;
+	else
+		currentShape->moveTo(x, y);
+}
+auto AMyGameStateBase::right() -> void
+{
+	--x;
+	if (isCollide())
+		++x;
+	else
+		currentShape->moveTo(x, y);
+}
+auto AMyGameStateBase::rotate() -> void
+{
+	currentShape->rotL();
+	if (isCollide())
+		currentShape->rotR();
+	else
+		currentShape->moveTo(x, y);
+
 }
