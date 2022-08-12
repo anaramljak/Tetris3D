@@ -11,6 +11,7 @@ UCLASS()
 class TETRIS_API AMyPawn : public ADefaultPawn
 {
 	GENERATED_BODY()
+	AMyPawn();
 	auto SetupPlayerInputComponent(UInputComponent *) -> void override;
 	auto left() -> void;
 	auto right() -> void;

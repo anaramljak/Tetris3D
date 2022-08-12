@@ -64,7 +64,7 @@ auto Shape::moveTo(int xx, int yy) -> void
 	for (int x = 0; x < 4; ++x)
 		for (int y = 0; y < 4; ++y)
 			if (blocks[x][y])
-			  blocks[x][y]->SetActorLocation(FVector(-240, (xx + x) * 100 - 760, 1970 - (yy + y) * 100));
+			  blocks[x][y]->SetActorLocation(FVector(150, (xx + x) * 100 - 440, 2070 - (yy + y) * 100));
 }
 
 auto Shape::hasBlock(int x, int y) const -> bool

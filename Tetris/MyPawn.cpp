@@ -1,5 +1,12 @@
 #include "MyPawn.h"
 #include "MyGameStateBase.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+
+
+AMyPawn::AMyPawn() 
+{
+}
 
 auto AMyPawn::SetupPlayerInputComponent(UInputComponent *in) -> void
 {

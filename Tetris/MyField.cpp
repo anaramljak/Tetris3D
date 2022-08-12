@@ -19,7 +19,7 @@ auto MyField::addBlock(int x, int y) -> void
 	if (blocks[x][y])
 		return;
 	blocks[x][y] = gs.get().createBlock();
-	blocks[x][y]->SetActorLocation(FVector(-240, x * 100 - 760, 2070 - y * 100));
+	blocks[x][y]->SetActorLocation(FVector(150, x * 100 - 440, 2070 - y * 100));
 
 }
 
