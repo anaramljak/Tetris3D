@@ -11,6 +11,7 @@ public:
 	MyField(class AMyGameStateBase &);
 	auto hasBlock(int x, int y) const -> bool;
 	auto addBlock(int x, int y) -> void;
+	void hasFullRow();
 	~MyField();
 private:
 	std::array<std::array<AActor*, 20>, 10> blocks;

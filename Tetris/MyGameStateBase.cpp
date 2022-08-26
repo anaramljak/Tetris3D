@@ -37,6 +37,9 @@ void AMyGameStateBase::Tick(float DeltaTime)
 		currentShape->moveTo(x, y);
 		nextMove = GetWorld()->GetTimeSeconds() + 0.5;
 	}
+
+	field->hasFullRow();
+	
 }
 
 auto AMyGameStateBase::isCollide() const -> bool
