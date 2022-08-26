@@ -33,7 +33,7 @@ void AMyGameStateBase::Tick(float DeltaTime)
 		{
 			--y;
 			putShapeOnTheFloor();
-		}
+		}  
 		currentShape->moveTo(x, y);
 		nextMove = GetWorld()->GetTimeSeconds() + 0.5;
 	}
@@ -101,5 +101,12 @@ auto AMyGameStateBase::rotate() -> void
 
 auto AMyGameStateBase::down() -> void
 {
-	currentShape->moveToSpeed(x, y);
+	++y;
+	if (isCollide()) {
+		--y;
+		putShapeOnTheFloor();
+	}
+	else {
+		currentShape->moveTo(x, y);
+	}
 }

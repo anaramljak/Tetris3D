@@ -68,13 +68,6 @@ auto Shape::moveTo(int xx, int yy) -> void
 			  blocks[x][y]->SetActorLocation(FVector(150, (xx + x) * 100 - 440, 2070 - (yy + y) * 100));
 }
 
-auto Shape::moveToSpeed(int xx, int yy) -> void
-{
-	for (int x = 0; x < 4; ++x)
-		for (int y = 0; y < 4; ++y)
-			if (blocks[x][y])
-				blocks[x][y]->SetActorLocation(FVector(150, (xx + x) * 200 - 440, 2070 - (yy + y) * 200));
-}
 
 auto Shape::hasBlock(int x, int y) const -> bool
 {

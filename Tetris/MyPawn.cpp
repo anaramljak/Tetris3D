@@ -9,6 +9,7 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent *ic)
 	ic->BindAction("Left", IE_Pressed, this, &AMyPawn::left);
 	ic->BindAction("Right", IE_Pressed, this, &AMyPawn::right);
 	ic->BindAction("Rotate", IE_Pressed, this, &AMyPawn::rotate);
+	ic->BindAction("Down", IE_Pressed, this, &AMyPawn::down);
 }
 
 auto AMyPawn::left() -> void
