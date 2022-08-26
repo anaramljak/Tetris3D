@@ -45,8 +45,9 @@ Shape::Shape(class AMyGameStateBase &gs, ShapeType type)
 	};
 	for (int x = 0; x < 4; ++x)
 		for (int y = 0; y < 4; ++y)
-			if (shapes[type][x + y * 4] != ' ')
+			if (shapes[type][x + y * 4] != ' ') {
 				blocks[x][y] = gs.createBlock();
+			}
 			else
 				blocks[x][y] = nullptr;
 }
@@ -65,6 +66,14 @@ auto Shape::moveTo(int xx, int yy) -> void
 		for (int y = 0; y < 4; ++y)
 			if (blocks[x][y])
 			  blocks[x][y]->SetActorLocation(FVector(150, (xx + x) * 100 - 440, 2070 - (yy + y) * 100));
+}
+
+auto Shape::moveToSpeed(int xx, int yy) -> void
+{
+	for (int x = 0; x < 4; ++x)
+		for (int y = 0; y < 4; ++y)
+			if (blocks[x][y])
+				blocks[x][y]->SetActorLocation(FVector(150, (xx + x) * 200 - 440, 2070 - (yy + y) * 200));
 }
 
 auto Shape::hasBlock(int x, int y) const -> bool

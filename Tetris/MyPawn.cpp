@@ -4,15 +4,11 @@
 #include "GameFramework/SpringArmComponent.h"
 
 
-AMyPawn::AMyPawn() 
+void AMyPawn::SetupPlayerInputComponent(UInputComponent *ic)
 {
-}
-
-auto AMyPawn::SetupPlayerInputComponent(UInputComponent *in) -> void
-{
-	in->BindAction("Left", IE_Pressed, this, &AMyPawn::left);
-	in->BindAction("Right", IE_Pressed, this, &AMyPawn::right);
-	in->BindAction("Rotate", IE_Pressed, this, &AMyPawn::rotate);
+	ic->BindAction("Left", IE_Pressed, this, &AMyPawn::left);
+	ic->BindAction("Right", IE_Pressed, this, &AMyPawn::right);
+	ic->BindAction("Rotate", IE_Pressed, this, &AMyPawn::rotate);
 }
 
 auto AMyPawn::left() -> void
@@ -29,6 +25,11 @@ auto AMyPawn::rotate() -> void
 {
 	UE_LOG(LogTemp, Warning, TEXT("rotate"));
 	getGameState()->rotate();
+}
+auto AMyPawn::down() -> void
+{
+	UE_LOG(LogTemp, Warning, TEXT("down"));
+	getGameState()->down();
 }
 
 auto AMyPawn::getGameState() const -> AMyGameStateBase*

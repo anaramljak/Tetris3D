@@ -11,19 +11,17 @@ UCLASS()
 class TETRIS_API AMyGameStateBase : public AGameStateBase
 {
 	GENERATED_BODY()
-	UClass* blockClass = nullptr;
+	UClass *blockClass = nullptr;
 	AMyGameStateBase();
 	auto BeginPlay() -> void override;
-	auto EndPlay
-	(
-		const EEndPlayReason::Type EndPlayReason
-	) -> void override;
+	auto EndPlay(const EEndPlayReason::Type EndPlayReason) -> void override;
 	auto Tick(float DeltaTime) -> void override;
 public:
-	auto createBlock()-> AActor *;
+	auto createBlock() -> AActor *;
 	auto left() -> void;
 	auto right() -> void;
 	auto rotate() -> void;
+	auto down() -> void;
 private:
 	std::unique_ptr<Shape> currentShape;
 	std::unique_ptr<MyField> field;

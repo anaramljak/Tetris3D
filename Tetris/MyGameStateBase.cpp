@@ -24,7 +24,7 @@ auto AMyGameStateBase::newShape() -> void
 	currentShape->moveTo(x, y);
 }
 
-auto AMyGameStateBase::Tick(float DeltaTime) -> void
+void AMyGameStateBase::Tick(float DeltaTime) 
 {
 	if (GetWorld()->GetTimeSeconds() > nextMove)
 	{
@@ -83,9 +83,9 @@ auto AMyGameStateBase::left() -> void
 }
 auto AMyGameStateBase::right() -> void
 {
-	--x;
+	++x;
 	if (isCollide())
-		++x;
+		--x;
 	else
 		currentShape->moveTo(x, y);
 }
@@ -97,4 +97,9 @@ auto AMyGameStateBase::rotate() -> void
 	else
 		currentShape->moveTo(x, y);
 
+}
+
+auto AMyGameStateBase::down() -> void
+{
+	currentShape->moveToSpeed(x, y);
 }

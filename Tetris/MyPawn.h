@@ -11,10 +11,11 @@ UCLASS()
 class TETRIS_API AMyPawn : public ADefaultPawn
 {
 	GENERATED_BODY()
-	AMyPawn();
-	auto SetupPlayerInputComponent(UInputComponent *) -> void override;
+public:
+	auto SetupPlayerInputComponent(UInputComponent *ic) -> void override;
 	auto left() -> void;
 	auto right() -> void;
 	auto rotate() -> void;
-	auto getGameState() const->AMyGameStateBase*;
+	auto down() -> void;
+	auto getGameState() const-> class AMyGameStateBase *;
 };

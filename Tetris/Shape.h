@@ -12,6 +12,7 @@ public:
 	Shape(class AMyGameStateBase &, ShapeType);
 	~Shape();
 	auto moveTo(int x, int y) -> void;
+	auto moveToSpeed(int x, int y) -> void;
 	auto hasBlock(int x, int y) const -> bool;
 	auto rotL() -> void;
 	auto rotR() -> void;
