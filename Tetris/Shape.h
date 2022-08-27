@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Block.h"
 #include <array>
 
 enum class ShapeType {I, O, T, S, Z, J, L};
@@ -17,5 +18,5 @@ public:
 	auto rotR() -> void;
 
 private:
-	std::array<std::array<class AActor*, 4>, 4> blocks;
+	std::array<std::array<class ABlock*, 4>, 4> blocks;
 };

@@ -1,6 +1,7 @@
 
 #include "Shape.h"
 #include "MyGameStateBase.h"
+#include "Block.h"
 #include <unordered_map>
 #include <map>
 
@@ -101,7 +102,7 @@ auto Shape::rotR() -> void
 	{{2, 3}, {0, 2}},
 	{{2, 3}, {0, 3}},
 	};
-	std::array<std::array<class AActor*, 4>, 4> tmpBlocks;
+	std::array<std::array<class ABlock*, 4>, 4> tmpBlocks;
 	for (int x = 0; x < 4; ++x)
 		for (int y = 0; y < 4; ++y)
 		{

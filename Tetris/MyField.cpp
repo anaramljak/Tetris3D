@@ -26,32 +26,50 @@ auto MyField::addBlock(int x, int y) -> void
 
 void MyField::hasFullRow()
 {
-	std::array<int,10> xs;
-	int count = 0;
-	for (int yy = 0; yy < 20; yy++)
+	std::array<int, 10> xs;
+	for (int j = 0; j < 20; j++)
 	{
-		for (int xx = 0; xx < 10; xx++)
+		int count = 0;
+		for (int i = 0; i < 10; i++)
 		{
-			if (hasBlock(xx, yy)) {
-				xs[count] = xx;
+			if (hasBlock(i, j)) {
+				xs[count] = i;
 				count++;
 			}
 			else {
-				count = 0;
+				break;
 			}				
 			
 		}
+
 		if (count == 10) {
 			for (int i = 0; i < 10; i++) {
-				int x = xs[i];
-				blocks[x][yy]->SetActorHiddenInGame(true);
-				blocks[x][yy]->SetActorEnableCollision(false);
-				blocks[x][yy]->SetActorTickEnabled(false);
+				blocks[i][j]->SetActorHiddenInGame(true);
+				blocks[i][j] = nullptr;
 			}
 		}
-	}
-		
+	} 	
 }
+
+bool MyField::hasFullCol()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		if (hasBlock(i, 1))
+		{
+			for (int x = 0; x < 10; ++x)
+				for (int y = 0; y < 20; ++y) {
+					if (hasBlock(x, y)) {
+						blocks[x][y]->SetActorHiddenInGame(true);
+						blocks[x][y] = nullptr;
+					}
+				}
+			return true;
+		}
+	}
+	return false;
+}
+
 
 MyField::~MyField()
 {

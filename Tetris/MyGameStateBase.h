@@ -5,6 +5,7 @@
 #include "Shape.h"
 #include <memory>
 #include "MyField.h"
+#include "Block.h"
 #include "MyGameStateBase.generated.h"
 
 UCLASS()
@@ -17,7 +18,7 @@ class TETRIS_API AMyGameStateBase : public AGameStateBase
 	auto EndPlay(const EEndPlayReason::Type EndPlayReason) -> void override;
 	auto Tick(float DeltaTime) -> void override;
 public:
-	auto createBlock() -> AActor *;
+	auto createBlock() -> ABlock *;
 	auto left() -> void;
 	auto right() -> void;
 	auto rotate() -> void;

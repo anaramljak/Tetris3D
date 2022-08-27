@@ -38,8 +38,10 @@ void AMyGameStateBase::Tick(float DeltaTime)
 		nextMove = GetWorld()->GetTimeSeconds() + 0.5;
 	}
 
-	field->hasFullRow();
-	
+	if (field->hasFullCol())
+	{
+		BeginPlay();
+	}
 }
 
 auto AMyGameStateBase::isCollide() const -> bool
@@ -51,7 +53,7 @@ auto AMyGameStateBase::isCollide() const -> bool
 	return false;
 }
 
-auto AMyGameStateBase::createBlock() -> AActor *
+auto AMyGameStateBase::createBlock() -> ABlock *
 {
 	FActorSpawnParameters param;
 	param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -73,6 +75,7 @@ auto AMyGameStateBase::putShapeOnTheFloor() -> void
 			if (currentShape->hasBlock(xx, yy))
 				field->addBlock(xx + x, yy + y);
 		}
+	field->hasFullRow();
 	newShape();
 }
 
