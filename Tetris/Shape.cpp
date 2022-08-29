@@ -2,6 +2,9 @@
 #include "Shape.h"
 #include "MyGameStateBase.h"
 #include "Block.h"
+#include "Components/InputComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include <unordered_map>
 #include <map>
 
@@ -44,22 +47,16 @@ Shape::Shape(class AMyGameStateBase &gs, ShapeType type)
 		 " ** " //
 		 "    "},
 	};
+
 	for (int x = 0; x < 4; ++x)
 		for (int y = 0; y < 4; ++y)
 			if (shapes[type][x + y * 4] != ' ') {
-				blocks[x][y] = gs.createBlock();
+				blocks[x][y] = gs.createBlock(type);
 			}
 			else
 				blocks[x][y] = nullptr;
 }
 
-Shape::~Shape()
-{
-	for (int x = 0; x < 4; ++x)
-		for (int y = 0; y < 4; ++y)
-			if (blocks[x][y])
-				blocks[x][y]->Destroy();
-}
 
 auto Shape::moveTo(int xx, int yy) -> void
 {
@@ -92,7 +89,7 @@ auto Shape::rotR() -> void
 	{{0, 1}, {2, 0}},
 	{{1, 1}, {2, 1}},
 	{{2, 1}, {2, 2}},
-	{{2, 1}, {2, 3}},
+	{{3, 1}, {2, 3}},
 	{{0, 2}, {1, 0}},
 	{{1, 2}, {1, 1}},
 	{{2, 2}, {1, 2}},
@@ -100,9 +97,10 @@ auto Shape::rotR() -> void
 	{{0, 3}, {0, 0}},
 	{{1, 3}, {0, 1}},
 	{{2, 3}, {0, 2}},
-	{{2, 3}, {0, 3}},
+	{{3, 3}, {0, 3}},
 	};
 	std::array<std::array<class ABlock*, 4>, 4> tmpBlocks;
+
 	for (int x = 0; x < 4; ++x)
 		for (int y = 0; y < 4; ++y)
 		{
@@ -112,5 +110,10 @@ auto Shape::rotR() -> void
 	blocks = tmpBlocks;
 }
 
-
-
+Shape::~Shape()
+{
+	for (int x = 0; x < 4; ++x)
+		for (int y = 0; y < 4; ++y)
+			if (blocks[x][y])
+				blocks[x][y]->Destroy();
+}

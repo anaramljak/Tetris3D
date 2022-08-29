@@ -6,7 +6,7 @@
 #include "Block.h"
 #include <array>
 
-enum class ShapeType {I, O, T, S, Z, J, L};
+enum class ShapeType {I, O, T, S, Z, J, L, NONE};
 class TETRIS_API Shape
 {
 public:
@@ -16,7 +16,6 @@ public:
 	auto hasBlock(int x, int y) const -> bool;
 	auto rotL() -> void;
 	auto rotR() -> void;
-
-private:
+public:
 	std::array<std::array<class ABlock*, 4>, 4> blocks;
 };

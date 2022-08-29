@@ -17,16 +17,19 @@ auto AMyPawn::left() -> void
 	UE_LOG(LogTemp, Warning, TEXT("left"));
 	getGameState()->left();
 }
+
 auto AMyPawn::right() -> void
 {
 	UE_LOG(LogTemp, Warning, TEXT("right"));
 	getGameState()->right();
 }
+
 auto AMyPawn::rotate() -> void
 {
 	UE_LOG(LogTemp, Warning, TEXT("rotate"));
 	getGameState()->rotate();
 }
+
 auto AMyPawn::down() -> void
 {
 	UE_LOG(LogTemp, Warning, TEXT("down"));

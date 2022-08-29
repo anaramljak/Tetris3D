@@ -4,19 +4,28 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Components/StaticMeshComponent.h"
+#include "Materials/MaterialInterface.h"
 #include "Block.generated.h"
 
 UCLASS()
 class TETRIS_API ABlock : public AActor
 {
 	GENERATED_BODY()
-	
+
+private:
+	UPROPERTY(VisibleAnywhere)
+		UStaticMeshComponent* Mesh;
+	UMaterialInterface* Material;
+	UMaterialInstanceDynamic* DynamicMaterial;
+
+
 public:	
 	// Sets default values for this actor's properties
 	ABlock();
 
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* mesh = nullptr;
+	void changeColor(FLinearColor color);
 
 protected:
 	// Called when the game starts or when spawned
@@ -25,5 +34,4 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	
 };

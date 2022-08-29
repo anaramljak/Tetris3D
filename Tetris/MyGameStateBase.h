@@ -18,7 +18,7 @@ class TETRIS_API AMyGameStateBase : public AGameStateBase
 	auto EndPlay(const EEndPlayReason::Type EndPlayReason) -> void override;
 	auto Tick(float DeltaTime) -> void override;
 public:
-	auto createBlock() -> ABlock *;
+	auto createBlock(ShapeType type) -> ABlock *;
 	auto left() -> void;
 	auto right() -> void;
 	auto rotate() -> void;

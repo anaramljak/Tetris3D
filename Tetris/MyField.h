@@ -12,8 +12,11 @@ public:
 	MyField(class AMyGameStateBase &);
 	auto hasBlock(int x, int y) const -> bool;
 	auto addBlock(int x, int y) -> void;
-	void hasFullRow();
-	bool hasFullCol();
+	auto deleteFullRow(int j) -> void;
+	auto decreaseFullRow(int j) -> void;
+	auto cleanFullRow() -> void;
+	auto hasFullRow(int j) -> bool;
+	auto hasFullCol() -> bool;
 	~MyField();
 private:
 	std::array<std::array<ABlock*, 20>, 10> blocks;

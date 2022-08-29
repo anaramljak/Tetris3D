@@ -19,39 +19,64 @@ auto MyField::addBlock(int x, int y) -> void
 {
 	if (blocks[x][y])
 		return;
-	blocks[x][y] = gs.get().createBlock();
+	blocks[x][y] = gs.get().createBlock(ShapeType::NONE);
 	blocks[x][y]->SetActorLocation(FVector(150, x * 100 - 440, 2070 - y * 100));
 
 }
 
-void MyField::hasFullRow()
+auto MyField::hasFullRow(int j) -> bool
 {
-	std::array<int, 10> xs;
-	for (int j = 0; j < 20; j++)
+	int count = 0;
+	for (int i = 0; i < 10; i++)
 	{
-		int count = 0;
-		for (int i = 0; i < 10; i++)
-		{
-			if (hasBlock(i, j)) {
-				xs[count] = i;
-				count++;
-			}
-			else {
-				break;
-			}				
-			
+		if (hasBlock(i, j)) {
+			count++;
 		}
+		else {
+			break;
+		}
+	}
 
-		if (count == 10) {
-			for (int i = 0; i < 10; i++) {
-				blocks[i][j]->SetActorHiddenInGame(true);
-				blocks[i][j] = nullptr;
-			}
-		}
-	} 	
+	if (count == 10) {
+		return true;
+	}
+	return false;
 }
 
-bool MyField::hasFullCol()
+auto MyField::deleteFullRow(int j) -> void
+{
+	for (int i = 0; i < 10; i++) {
+		blocks[i][j]->SetActorHiddenInGame(true);
+		blocks[i][j] = nullptr;
+	}
+
+}
+
+auto MyField::decreaseFullRow(int j) -> void
+{
+	for (int k = j; k > 0; --k) {
+		for (int i = 0; i < 10; i++) {
+			if (hasBlock(i, k)) {
+				blocks[i][k]->SetActorLocation(FVector(150, i * 100 - 440, 2070 - (k + 1) * 100));
+			}
+			blocks[i][k] = blocks[i][k - 1];
+		}
+	}
+}
+
+auto MyField::cleanFullRow() -> void
+{
+	for (int j = 0; j < 20; j++)
+	{
+		if (hasFullRow(j)) {
+			deleteFullRow(j);
+			decreaseFullRow(j);		
+		}
+	}
+}
+
+
+auto MyField::hasFullCol() -> bool
 {
 	for (int i = 0; i < 10; i++)
 	{

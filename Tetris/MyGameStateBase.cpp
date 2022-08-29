@@ -7,6 +7,7 @@ AMyGameStateBase::AMyGameStateBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 }
+
 auto AMyGameStateBase::BeginPlay() -> void
 {
 	Super::BeginPlay();
@@ -38,10 +39,6 @@ void AMyGameStateBase::Tick(float DeltaTime)
 		nextMove = GetWorld()->GetTimeSeconds() + 0.5;
 	}
 
-	if (field->hasFullCol())
-	{
-		BeginPlay();
-	}
 }
 
 auto AMyGameStateBase::isCollide() const -> bool
@@ -53,18 +50,57 @@ auto AMyGameStateBase::isCollide() const -> bool
 	return false;
 }
 
-auto AMyGameStateBase::createBlock() -> ABlock *
+auto AMyGameStateBase::createBlock(ShapeType type) -> ABlock *
 {
 	FActorSpawnParameters param;
 	param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	return GetWorld()->SpawnActor<ABlock>(blockClass, FVector{ 0, 0, 0 }, FRotator{ 0, 0, 0 }, param);
+	ABlock* a = GetWorld()->SpawnActor<ABlock>(blockClass, FVector{ 0, 0, 0 }, FRotator{ 0, 0, 0 }, param);
+	switch (type) {
+		case ShapeType::O:
+		{
+			
+			a->changeColor(FLinearColor::Yellow);
+			break;
+		}
+		case ShapeType::L:
+		{
+			a->changeColor(FLinearColor::Red);
+			break;
+		}
+		case ShapeType::I:
+		{
+			a->changeColor(FLinearColor::Green);
+			break;
+		}
+		case ShapeType::J:
+		{
+			a->changeColor(FLinearColor::Blue);
+			break;
+		}
+		case ShapeType::S:
+		{
+			a->changeColor(FLinearColor(0.26f, 0.05f, 0.38f));
+			break;
+		}
+		case ShapeType::T:
+		{
+			a->changeColor(FLinearColor(0.38f, 0.01f, 0.37f));
+			break;
+		}
+		case ShapeType::Z:
+		{
+			a->changeColor(FLinearColor(0.62f, 0.25f, 0.05f));
+			break;
+		}
+		default:
+		{
+			a->changeColor(FLinearColor::White);
+		}
+		break;
 
-}
+	}
+	return a;
 
-auto AMyGameStateBase::EndPlay(const EEndPlayReason::Type EndPlayReason) -> void
-{
-	field = nullptr;
-	currentShape = nullptr;
 }
 
 auto AMyGameStateBase::putShapeOnTheFloor() -> void
@@ -75,7 +111,13 @@ auto AMyGameStateBase::putShapeOnTheFloor() -> void
 			if (currentShape->hasBlock(xx, yy))
 				field->addBlock(xx + x, yy + y);
 		}
-	field->hasFullRow();
+
+	if (field->hasFullCol())
+	{
+		BeginPlay();
+	}
+
+	field->cleanFullRow();
 	newShape();
 }
 
@@ -87,6 +129,7 @@ auto AMyGameStateBase::left() -> void
 	else
 		currentShape->moveTo(x, y);
 }
+
 auto AMyGameStateBase::right() -> void
 {
 	++x;
@@ -95,6 +138,7 @@ auto AMyGameStateBase::right() -> void
 	else
 		currentShape->moveTo(x, y);
 }
+
 auto AMyGameStateBase::rotate() -> void
 {
 	currentShape->rotL();
@@ -115,4 +159,10 @@ auto AMyGameStateBase::down() -> void
 	else {
 		currentShape->moveTo(x, y);
 	}
+}
+
+auto AMyGameStateBase::EndPlay(const EEndPlayReason::Type EndPlayReason) -> void
+{
+	field = nullptr;
+	currentShape = nullptr;
 }
