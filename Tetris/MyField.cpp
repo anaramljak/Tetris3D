@@ -64,18 +64,6 @@ auto MyField::decreaseFullRow(int j) -> void
 	}
 }
 
-auto MyField::cleanFullRow() -> void
-{
-	for (int j = 0; j < 20; j++)
-	{
-		if (hasFullRow(j)) {
-			deleteFullRow(j);
-			decreaseFullRow(j);		
-		}
-	}
-}
-
-
 auto MyField::hasFullCol() -> bool
 {
 	for (int i = 0; i < 10; i++)

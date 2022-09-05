@@ -14,7 +14,6 @@ public:
 	auto addBlock(int x, int y) -> void;
 	auto deleteFullRow(int j) -> void;
 	auto decreaseFullRow(int j) -> void;
-	auto cleanFullRow() -> void;
 	auto hasFullRow(int j) -> bool;
 	auto hasFullCol() -> bool;
 	~MyField();

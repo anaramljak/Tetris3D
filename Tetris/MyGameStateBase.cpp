@@ -43,9 +43,9 @@ void AMyGameStateBase::Tick(float DeltaTime)
 
 auto AMyGameStateBase::isCollide() const -> bool
 {
-	for (int xx = 0; xx < 4; ++xx)
-		for (int yy = 0; yy < 4; ++yy)
-			if (currentShape->hasBlock(xx, yy) && field->hasBlock(xx + x, yy + y))
+	for (int i = 0; i < 4; ++i)
+		for (int j = 0; j < 4; ++j)
+			if (currentShape->hasBlock(i, j) && field->hasBlock(i + x, j + y))
 				return true;
 	return false;
 }
@@ -54,70 +54,82 @@ auto AMyGameStateBase::createBlock(ShapeType type) -> ABlock *
 {
 	FActorSpawnParameters param;
 	param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	ABlock* a = GetWorld()->SpawnActor<ABlock>(blockClass, FVector{ 0, 0, 0 }, FRotator{ 0, 0, 0 }, param);
+	ABlock* block = GetWorld()->SpawnActor<ABlock>(blockClass, FVector{ 0, 0, 0 }, FRotator{ 0, 0, 0 }, param);
 	switch (type) {
 		case ShapeType::O:
 		{
 			
-			a->changeColor(FLinearColor::Yellow);
+			block->changeColor(FLinearColor::Yellow);
 			break;
 		}
 		case ShapeType::L:
 		{
-			a->changeColor(FLinearColor::Red);
+			block->changeColor(FLinearColor::Red);
 			break;
 		}
 		case ShapeType::I:
 		{
-			a->changeColor(FLinearColor::Green);
+			block->changeColor(FLinearColor::Green);
 			break;
 		}
 		case ShapeType::J:
 		{
-			a->changeColor(FLinearColor::Blue);
+			block->changeColor(FLinearColor::Blue);
 			break;
 		}
 		case ShapeType::S:
 		{
-			a->changeColor(FLinearColor(0.26f, 0.05f, 0.38f));
+			block->changeColor(FLinearColor(0.26f, 0.05f, 0.38f));
 			break;
 		}
 		case ShapeType::T:
 		{
-			a->changeColor(FLinearColor(0.38f, 0.01f, 0.37f));
+			block->changeColor(FLinearColor(0.38f, 0.01f, 0.37f));
 			break;
 		}
 		case ShapeType::Z:
 		{
-			a->changeColor(FLinearColor(0.62f, 0.25f, 0.05f));
+			block->changeColor(FLinearColor(0.62f, 0.25f, 0.05f));
 			break;
 		}
 		default:
 		{
-			a->changeColor(FLinearColor::White);
+			block->changeColor(FLinearColor::White);
 		}
 		break;
 
 	}
-	return a;
+	return block;
 
 }
 
 auto AMyGameStateBase::putShapeOnTheFloor() -> void
 {
-	for (int xx = 0; xx < 4; ++xx)
-		for (int yy = 0; yy < 4; ++yy)
+	for (int i = 0; i < 4; ++i)
+		for (int j = 0; j < 4; ++j)
 		{
-			if (currentShape->hasBlock(xx, yy))
-				field->addBlock(xx + x, yy + y);
+			if (currentShape->hasBlock(i, j))
+				field->addBlock(i + x, j + y);
 		}
 
 	if (field->hasFullCol())
 	{
+		if (score > highScore)
+		{
+			highScore = score;
+			score = 0;
+		}
 		BeginPlay();
 	}
 
-	field->cleanFullRow();
+	for (int j = 0; j < 20; j++)
+	{
+		if (field->hasFullRow(j)) {
+			field->deleteFullRow(j);
+			field->decreaseFullRow(j);
+			score += 100;
+		}
+	}
 	newShape();
 }
 

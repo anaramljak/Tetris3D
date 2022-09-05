@@ -29,6 +29,8 @@ private:
 	int y = 0;
 	int x = 3;
 	float nextMove = 0;
+	int score = 0;
+	int highScore = 0;
 	auto newShape() -> void;
 	auto putShapeOnTheFloor() -> void;
 	auto isCollide() const -> bool;

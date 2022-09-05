@@ -58,12 +58,12 @@ Shape::Shape(class AMyGameStateBase &gs, ShapeType type)
 }
 
 
-auto Shape::moveTo(int xx, int yy) -> void
+auto Shape::moveTo(int x, int y) -> void
 {
-	for (int x = 0; x < 4; ++x)
-		for (int y = 0; y < 4; ++y)
-			if (blocks[x][y])
-			  blocks[x][y]->SetActorLocation(FVector(150, (xx + x) * 100 - 440, 2070 - (yy + y) * 100));
+	for (int i = 0; i < 4; ++i)
+		for (int j = 0; j < 4; ++j)
+			if (blocks[i][j])
+			  blocks[i][j]->SetActorLocation(FVector(150, (x + i) * 100 - 440, 2070 - (y + j) * 100));
 }
 
 
