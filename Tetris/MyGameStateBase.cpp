@@ -60,36 +60,43 @@ auto AMyGameStateBase::createBlock(ShapeType type) -> ABlock *
 		{
 			
 			block->changeColor(FLinearColor::Yellow);
+			currentColor = FLinearColor::Yellow;
 			break;
 		}
 		case ShapeType::L:
 		{
 			block->changeColor(FLinearColor::Red);
+			currentColor = FLinearColor::Red;
 			break;
 		}
 		case ShapeType::I:
 		{
 			block->changeColor(FLinearColor::Green);
+			currentColor = FLinearColor::Green;
 			break;
 		}
 		case ShapeType::J:
 		{
 			block->changeColor(FLinearColor::Blue);
+			currentColor = FLinearColor::Blue;
 			break;
 		}
 		case ShapeType::S:
 		{
 			block->changeColor(FLinearColor(0.26f, 0.05f, 0.38f));
+			currentColor = FLinearColor(0.26f, 0.05f, 0.38f);
 			break;
 		}
 		case ShapeType::T:
 		{
-			block->changeColor(FLinearColor(0.38f, 0.01f, 0.37f));
+			block->changeColor(FLinearColor(2.0f, 0.5f, 0.6f));
+			currentColor = FLinearColor(2.0f, 0.5f, 0.6f);
 			break;
 		}
 		case ShapeType::Z:
 		{
-			block->changeColor(FLinearColor(0.62f, 0.25f, 0.05f));
+			block->changeColor(FLinearColor(0.1f, 0.5f, 0.5f));
+			currentColor = FLinearColor(0.1f, 0.5f, 0.5f);
 			break;
 		}
 		default:
@@ -114,11 +121,7 @@ auto AMyGameStateBase::putShapeOnTheFloor() -> void
 
 	if (field->hasFullCol())
 	{
-		if (score > highScore)
-		{
-			highScore = score;
-			score = 0;
-		}
+		score = 0;
 		BeginPlay();
 	}
 
@@ -128,6 +131,10 @@ auto AMyGameStateBase::putShapeOnTheFloor() -> void
 			field->deleteFullRow(j);
 			field->decreaseFullRow(j);
 			score += 100;
+			if (score > highScore)
+			{
+				highScore = score;
+			}
 		}
 	}
 	newShape();

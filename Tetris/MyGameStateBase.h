@@ -18,6 +18,7 @@ class TETRIS_API AMyGameStateBase : public AGameStateBase
 	auto EndPlay(const EEndPlayReason::Type EndPlayReason) -> void override;
 	auto Tick(float DeltaTime) -> void override;
 public:
+	FLinearColor currentColor;
 	auto createBlock(ShapeType type) -> ABlock *;
 	auto left() -> void;
 	auto right() -> void;
@@ -29,9 +30,12 @@ private:
 	int y = 0;
 	int x = 3;
 	float nextMove = 0;
-	int score = 0;
-	int highScore = 0;
 	auto newShape() -> void;
 	auto putShapeOnTheFloor() -> void;
 	auto isCollide() const -> bool;
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int score = 0;
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int highScore = 0;
+
 };

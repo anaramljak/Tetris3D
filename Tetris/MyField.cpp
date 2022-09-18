@@ -21,6 +21,7 @@ auto MyField::addBlock(int x, int y) -> void
 		return;
 	blocks[x][y] = gs.get().createBlock(ShapeType::NONE);
 	blocks[x][y]->SetActorLocation(FVector(150, x * 100 - 440, 2070 - y * 100));
+	blocks[x][y]->changeColor(gs.get().currentColor);
 
 }
 
