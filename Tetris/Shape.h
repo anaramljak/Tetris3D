@@ -12,10 +12,10 @@ class TETRIS_API Shape
 public:
 	Shape(class AMyGameStateBase &, ShapeType);
 	~Shape();
-	auto moveTo(int x, int y) -> void;
-	auto hasBlock(int x, int y) const -> bool;
+	auto moveTo(int x, int y, int z) -> void;
+	auto hasBlock(int x, int y, int z) const -> bool;
 	auto rotL() -> void;
 	auto rotR() -> void;
 public:
-	std::array<std::array<class ABlock*, 4>, 4> blocks;
+	std::array<std::array<std::array<class ABlock*, 4>, 4>, 4> blocks;
 };

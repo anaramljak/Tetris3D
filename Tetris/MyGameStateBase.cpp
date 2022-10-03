@@ -21,8 +21,9 @@ auto AMyGameStateBase::newShape() -> void
 {
 	x = 3;
 	y = 0;
+	z = 5;
 	currentShape = std::make_unique<Shape>(*this, static_cast<ShapeType>(rand() % 7));
-	currentShape->moveTo(x, y);
+	currentShape->moveTo(x, y, z);
 }
 
 void AMyGameStateBase::Tick(float DeltaTime) 
@@ -35,18 +36,26 @@ void AMyGameStateBase::Tick(float DeltaTime)
 			--y;
 			putShapeOnTheFloor();
 		}  
-		currentShape->moveTo(x, y);
-		nextMove = GetWorld()->GetTimeSeconds() + 0.5;
+		currentShape->moveTo(x, y, z);
+		if(score > 1000)
+			nextMove = GetWorld()->GetTimeSeconds() + 0.3;
+		else
+			nextMove = GetWorld()->GetTimeSeconds() + 0.5;
 	}
 
 }
 
 auto AMyGameStateBase::isCollide() const -> bool
 {
-	for (int i = 0; i < 4; ++i)
-		for (int j = 0; j < 4; ++j)
-			if (currentShape->hasBlock(i, j) && field->hasBlock(i + x, j + y))
-				return true;
+	for (int i = 0; i < 4; ++i) {
+		for (int j = 0; j < 4; ++j) {
+			for (int k = 0; k < 4; ++k) {
+				if (currentShape->hasBlock(i, j, k) && field->hasBlock(i + x, j + y, k + z)) {
+					return true;
+				}
+			}
+		}
+	}
 	return false;
 }
 
@@ -112,12 +121,16 @@ auto AMyGameStateBase::createBlock(ShapeType type) -> ABlock *
 
 auto AMyGameStateBase::putShapeOnTheFloor() -> void
 {
-	for (int i = 0; i < 4; ++i)
-		for (int j = 0; j < 4; ++j)
-		{
-			if (currentShape->hasBlock(i, j))
-				field->addBlock(i + x, j + y);
+	for (int i = 0; i < 4; ++i) {
+		for (int j = 0; j < 4; ++j) {
+			for (int k = 0; k < 4; ++k) {
+				if (currentShape->hasBlock(i, j, k)) {
+					field->addBlock(i + x, j + y, k + z);
+				}
+			}
 		}
+	}
+	newShape();
 
 	if (field->hasFullCol())
 	{
@@ -125,19 +138,30 @@ auto AMyGameStateBase::putShapeOnTheFloor() -> void
 		BeginPlay();
 	}
 
-	for (int j = 0; j < 20; j++)
-	{
-		if (field->hasFullRow(j)) {
-			field->deleteFullRow(j);
-			field->decreaseFullRow(j);
-			score += 100;
-			if (score > highScore)
-			{
-				highScore = score;
+	for (int j = 0; j < 20; j++) {
+		for (int k = 0; k < 10; k++)
+		{
+			if (field->hasFullRow(j, k)) {
+				field->deleteFullRow(j, k);
+				field->decreaseFullRow(j, k);
+				score += 100;
+				if (score > highScore)
+				{
+					highScore = score;
+				}
+			}
+
+			if (field->hasFullRowDiagonal(j, k)) {
+				field->deleteFullRowDiagonal(j, k);
+				field->decreaseFullRowDiagonal(j, k);
+				score += 100;
+				if (score > highScore)
+				{
+					highScore = score;
+				}
 			}
 		}
 	}
-	newShape();
 }
 
 auto AMyGameStateBase::left() -> void
@@ -146,7 +170,7 @@ auto AMyGameStateBase::left() -> void
 	if (isCollide())
 		++x;
 	else
-		currentShape->moveTo(x, y);
+		currentShape->moveTo(x, y, z);
 }
 
 auto AMyGameStateBase::right() -> void
@@ -155,7 +179,25 @@ auto AMyGameStateBase::right() -> void
 	if (isCollide())
 		--x;
 	else
-		currentShape->moveTo(x, y);
+		currentShape->moveTo(x, y, z);
+}
+
+auto AMyGameStateBase::back() -> void
+{
+	++z;
+	if (isCollide())
+		--z;
+	else
+		currentShape->moveTo(x, y, z);
+}
+
+auto AMyGameStateBase::front() -> void
+{
+	--z;
+	if (isCollide())
+		++z;
+	else
+		currentShape->moveTo(x, y, z);
 }
 
 auto AMyGameStateBase::rotate() -> void
@@ -164,7 +206,7 @@ auto AMyGameStateBase::rotate() -> void
 	if (isCollide())
 		currentShape->rotR();
 	else
-		currentShape->moveTo(x, y);
+		currentShape->moveTo(x, y, z);
 
 }
 
@@ -176,7 +218,7 @@ auto AMyGameStateBase::down() -> void
 		putShapeOnTheFloor();
 	}
 	else {
-		currentShape->moveTo(x, y);
+		currentShape->moveTo(x, y, z);
 	}
 }
 

@@ -10,6 +10,8 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent *ic)
 	ic->BindAction("Right", IE_Pressed, this, &AMyPawn::right);
 	ic->BindAction("Rotate", IE_Pressed, this, &AMyPawn::rotate);
 	ic->BindAction("Down", IE_Pressed, this, &AMyPawn::down);
+	ic->BindAction("Back", IE_Pressed, this, &AMyPawn::back);
+	ic->BindAction("Front", IE_Pressed, this, &AMyPawn::front);
 }
 
 auto AMyPawn::left() -> void
@@ -22,6 +24,18 @@ auto AMyPawn::right() -> void
 {
 	UE_LOG(LogTemp, Warning, TEXT("right"));
 	getGameState()->right();
+}
+
+auto AMyPawn::back() -> void
+{
+	UE_LOG(LogTemp, Warning, TEXT("back"));
+	getGameState()->back();
+}
+
+auto AMyPawn::front() -> void
+{
+	UE_LOG(LogTemp, Warning, TEXT("front"));
+	getGameState()->front();
 }
 
 auto AMyPawn::rotate() -> void

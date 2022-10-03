@@ -22,6 +22,8 @@ public:
 	auto createBlock(ShapeType type) -> ABlock *;
 	auto left() -> void;
 	auto right() -> void;
+	auto back() -> void;
+	auto front() -> void;
 	auto rotate() -> void;
 	auto down() -> void;
 private:
@@ -29,6 +31,7 @@ private:
 	std::unique_ptr<MyField> field;
 	int y = 0;
 	int x = 3;
+	int z = 5;
 	float nextMove = 0;
 	auto newShape() -> void;
 	auto putShapeOnTheFloor() -> void;

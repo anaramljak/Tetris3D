@@ -15,6 +15,8 @@ public:
 	auto SetupPlayerInputComponent(UInputComponent *ic) -> void override;
 	auto left() -> void;
 	auto right() -> void;
+	auto back() -> void;
+	auto front() -> void;
 	auto rotate() -> void;
 	auto down() -> void;
 	auto getGameState() const-> class AMyGameStateBase *;
